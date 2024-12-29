@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>AutoFormFiller</title>
+    <style>
+      body { width: 200px; padding: 10px; }
+      button { width: 100%; padding: 10px; }
+    </style>
+  </head>
+  <body>
+    <button id="clearStorage">Clear Saved Data</button>
+    <script>
+      document.getElementById('clearStorage').addEventListener('click', () => {
+        chrome.storage.local.remove("formData", () => {
+          alert("Saved data cleared.");
+        });
+      });
+    </script>
+  </body>
+</html>

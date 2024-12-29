@@ -1,0 +1,21 @@
+{
+    "manifest_version": 3,
+    "name": "AutoFormFiller",
+    "version": "1.0",
+    "description": "Saves and autofills form data on specific website.",
+    "permissions": ["storage", "activeTab"],
+    "content_scripts": [
+      {
+        "matches": ["https://ppmt.punjabpolice.gov.pk/*"],
+        "js": ["content.js"],
+        "run_at": "document_end"
+      }
+    ],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "action": {
+      "default_popup": "popup.html"
+    }
+  }
+  
