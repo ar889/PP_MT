@@ -38,11 +38,11 @@ function handleMileageInput() {
 function getGreeting() {
   const hours = new Date().getHours();
   if (hours < 12) {
-      return "Good Morning 🌞";
+    return "Good Morning 🌞";
   } else if (hours < 18) {
-      return "Good Afternoon ☀️";
+    return "Good Afternoon ☀️";
   } else {
-      return "Good Evening 🌙";
+    return "Good Evening 🌙";
   }
 }
 
@@ -51,6 +51,13 @@ function autofillForm() {
   const form = document.querySelector("#modelFrom");
   const greeting = getGreeting(); // Get the dynamic greeting
 
+  // Check if "data[utilized_officer]" has a value; if it does, stop auto-filling
+  const utilizedOfficer = form.querySelector('input[name="data[utilized_officer]"]');
+  if (utilizedOfficer && utilizedOfficer.value) {
+    console.log("Form will not auto-fill. For more inqueries contact to developer.");
+    return; // Exit the function
+  }
+
   if (form) {
     chrome.storage.local.get("formData", (data) => {
       if (data.formData) {
@@ -58,7 +65,7 @@ function autofillForm() {
 
         // Increment the date by 1 day
         const dateInput = form.querySelector('input[name="data[date]"]');
-        if (dateInput && formData.date && !dateInput.value) {
+        if (dateInput && formData.date) {
           let date = new Date(formData.date);
           date.setDate(date.getDate() + 1); // Increment by 1 day
           dateInput.value = date.toISOString().split('T')[0]; // Format to yyyy-mm-dd
@@ -75,7 +82,7 @@ function autofillForm() {
         if (dutyType) dutyType.value = formData.duty_type || '';
 
         const utilizedOfficer = form.querySelector('input[name="data[utilized_officer]"]');
-        if (utilizedOfficer && !utilizedOfficer.value) {
+        if (utilizedOfficer) {
           utilizedOfficer.value = formData.utilized_officer || '';
 
           // Show mileage popup only if `data[utilized_officer]` is empty
