@@ -58,7 +58,7 @@ function autofillForm() {
 
         // Increment the date by 1 day
         const dateInput = form.querySelector('input[name="data[date]"]');
-        if (dateInput && formData.date) {
+        if (dateInput && formData.date && !dateInput.value) {
           let date = new Date(formData.date);
           date.setDate(date.getDate() + 1); // Increment by 1 day
           dateInput.value = date.toISOString().split('T')[0]; // Format to yyyy-mm-dd
